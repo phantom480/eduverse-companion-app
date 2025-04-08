@@ -1,25 +1,30 @@
 
 import { useState } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
-import { Dashboard } from "@/components/dashboard/Dashboard";
 import { Navbar } from "@/components/layout/Navbar";
 import { UserRole } from "@/lib/types";
+import DashboardTabContent from "@/components/dashboard/DashboardTabContent";
 
 const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<UserRole>("student");
+  const [activeTab, setActiveTab] = useState("Dashboard");
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+  };
+  
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
   };
   
   return (
     <div className="min-h-screen bg-college-gray flex flex-col">
       {isLoggedIn ? (
         <>
-          <Navbar />
+          <Navbar onTabChange={handleTabChange} />
           <main className="flex-1">
-            <Dashboard role={userRole} />
+            <DashboardTabContent role={userRole} activeTab={activeTab} />
           </main>
         </>
       ) : (

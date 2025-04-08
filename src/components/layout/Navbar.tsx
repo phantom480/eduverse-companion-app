@@ -27,7 +27,7 @@ const NavItem = ({ icon, label, active, onClick }: NavItemProps) => (
   </Button>
 );
 
-export function Navbar() {
+export function Navbar({ onTabChange }: { onTabChange: (tab: string) => void }) {
   const [activeTab, setActiveTab] = useState("Dashboard");
   
   const navItems = [
@@ -37,6 +37,11 @@ export function Navbar() {
     { icon: <BookOpen size={18} />, label: "Notes" },
     { icon: <Bell size={18} />, label: "Announcements" },
   ];
+
+  const handleTabClick = (label: string) => {
+    setActiveTab(label);
+    onTabChange(label);
+  };
 
   return (
     <div className="border-b bg-white flex justify-between items-center px-6 py-2">
@@ -51,7 +56,7 @@ export function Navbar() {
             icon={item.icon}
             label={item.label}
             active={activeTab === item.label}
-            onClick={() => setActiveTab(item.label)}
+            onClick={() => handleTabClick(item.label)}
           />
         ))}
       </div>
